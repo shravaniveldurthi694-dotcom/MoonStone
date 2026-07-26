@@ -20,11 +20,27 @@ portraitStyle.textContent = `
   .photo-portrait { background: url("WhatsApp Image 2026-07-26 at 10.05.49 PM.jpeg") center 20% / cover no-repeat !important; }
   .photo-portrait::before, .photo-portrait::after { display: none; }
   .photo-portrait .portrait-letter, .photo-portrait .portrait-doodle { display: none; }
+  .author-email { display: inline-block; margin: 18px 0 0; padding: 10px 18px; border: 1px solid rgba(255,255,255,.7); border-radius: 999px; background: rgba(255,255,255,.96); color: #4b315f !important; font-size: 13px; font-weight: 600; letter-spacing: .02em; box-shadow: 0 8px 24px rgba(38,22,50,.18); }
+  .night-mode .button-white { color: #2e2634 !important; background: #ffffff !important; }
+  .night-mode .button-white span { color: #7f5d9b !important; }
+  .night-mode .contact-card > p:not(.eyebrow), .night-mode .contact-inner > p:not(.eyebrow) { color: #fff1f7 !important; }
+  .hero-actions .button-dark { background: #2e2634 !important; color: #ffffff !important; box-shadow: 0 8px 22px rgba(46,38,52,.28); }
+  .hero-actions .button-dark span { color: #f2d8b1 !important; }
+  .hero-actions .button-dark:hover { background: #7f5d9b !important; color: #ffffff !important; }
+  @media (max-width: 800px) { .home-only .hero-art { transform-style: preserve-3d; transition: transform .18s ease-out; } .hero-art, .book-cover, .published-cover, .contact-card { touch-action: pan-y; } }
 `;
 document.head.appendChild(portraitStyle);
 document.querySelectorAll('.portrait').forEach(portrait => portrait.classList.add('photo-portrait'));
 document.querySelectorAll('a[href^="mailto:"]').forEach(link => {
   link.href = 'mailto:shravaniveldurthi778@gmail.com';
+});
+document.querySelectorAll('.contact-inner, .contact-card').forEach(section => {
+  if (!section.querySelector('.author-email')) {
+    const email = document.createElement('p');
+    email.className = 'author-email';
+    email.textContent = 'shravaniveldurthi778@gmail.com';
+    section.appendChild(email);
+  }
 });
 
 document.title = document.title.replace(/Shravani Veldurthi|Shravani/gi, 'MoonStone');
@@ -37,7 +53,6 @@ document.querySelectorAll('.brand-mark').forEach(mark => {
 document.querySelectorAll('[aria-label*="Shravani"], [aria-label*="Veldurthi"]').forEach(item => {
   item.setAttribute('aria-label', item.getAttribute('aria-label').replace(/Shravani Veldurthi|Shravani/gi, 'MoonStone'));
 });
-document.body.innerHTML = document.body.innerHTML.replace(/Shravani Veldurthi|Shravani/gi, 'MoonStone');
 document.querySelectorAll('.portrait').forEach(portrait => portrait.classList.add('photo-portrait'));
 document.querySelectorAll('a[href^="mailto:"]').forEach(link => {
   link.href = 'mailto:shravaniveldurthi778@gmail.com';
@@ -154,3 +169,17 @@ if (window.matchMedia('(pointer: fine)').matches) {
     card.addEventListener('mouseleave', () => { card.style.transform = ''; });
   });
 }
+
+// Touch-friendly 3D tilt for phones and tablets.
+document.querySelectorAll('.hero-art, .book-cover, .published-cover, .contact-card').forEach(card => {
+  card.addEventListener('pointermove', event => {
+    if (event.pointerType === 'mouse') return;
+    const box = card.getBoundingClientRect();
+    const x = (event.clientX - box.left) / box.width - 0.5;
+    const y = (event.clientY - box.top) / box.height - 0.5;
+    const strength = card.classList.contains('contact-card') ? 3 : 6;
+    card.style.transform = `perspective(900px) rotateX(${-y * strength}deg) rotateY(${x * strength}deg) translateZ(4px)`;
+  });
+  card.addEventListener('pointerup', () => { card.style.transform = ''; });
+  card.addEventListener('pointercancel', () => { card.style.transform = ''; });
+});
