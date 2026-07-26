@@ -17,12 +17,15 @@ function setMenu(open) {
 // MoonStone is the author's pen name.
 const portraitStyle = document.createElement('style');
 portraitStyle.textContent = `
-  .photo-portrait { background: url("WhatsApp Image 2026-07-26 at 10.05.49 PM.jpeg") center 35% / cover no-repeat !important; }
+  .photo-portrait { background: url("WhatsApp Image 2026-07-26 at 10.05.49 PM.jpeg") center 20% / cover no-repeat !important; }
   .photo-portrait::before, .photo-portrait::after { display: none; }
   .photo-portrait .portrait-letter, .photo-portrait .portrait-doodle { display: none; }
 `;
 document.head.appendChild(portraitStyle);
 document.querySelectorAll('.portrait').forEach(portrait => portrait.classList.add('photo-portrait'));
+document.querySelectorAll('a[href^="mailto:"]').forEach(link => {
+  link.href = 'mailto:shravaniveldurthi778@gmail.com';
+});
 
 document.title = document.title.replace(/Shravani Veldurthi|Shravani/gi, 'MoonStone');
 document.querySelectorAll('.brand-name').forEach(brand => {
