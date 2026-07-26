@@ -38,6 +38,10 @@ document.querySelectorAll('[aria-label*="Shravani"], [aria-label*="Veldurthi"]')
   item.setAttribute('aria-label', item.getAttribute('aria-label').replace(/Shravani Veldurthi|Shravani/gi, 'MoonStone'));
 });
 document.body.innerHTML = document.body.innerHTML.replace(/Shravani Veldurthi|Shravani/gi, 'MoonStone');
+document.querySelectorAll('.portrait').forEach(portrait => portrait.classList.add('photo-portrait'));
+document.querySelectorAll('a[href^="mailto:"]').forEach(link => {
+  link.href = 'mailto:shravaniveldurthi778@gmail.com';
+});
 
 menuButton?.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
 document.querySelectorAll('.nav a').forEach(link => link.addEventListener('click', () => setMenu(false)));
