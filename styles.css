@@ -34,3 +34,12 @@ body:before{content:'';position:fixed;inset:12px;border:1px solid rgba(127,93,15
 @media(max-width:800px){.home-only,.home-only a,.home-only button{cursor:auto}}
 .star-cursor{display:block}body,body a,body button{cursor:none}
 @media(max-width:800px){body,body a,body button{cursor:auto}.star-cursor{display:none}}
+ .published-cover.image-cover:after{display:none}
+/* Improve contrast for all content when night mode is active. */
+.night-mode .section-label{color:#cfc4d5;border-color:#5a4a63}
+.night-mode .page-hero>p:last-child,.night-mode .simple-content>div:last-child,.night-mode .journey-copy{color:#d8cedc}
+.night-mode .page-hero h1 i,.night-mode .shelf-copy h2 i{color:#d9b8ef}
+.night-mode .shelf-copy p:not(.kicker){color:#d8cedc}
+.night-mode .upcoming-shelf{background:#30273a;color:#f6edf5}
+.night-mode .upcoming-shelf .shelf-copy p:not(.kicker){color:#d8cedc}
+.night-mode .footer{color:#c8b9c9}

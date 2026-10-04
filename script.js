@@ -14,7 +14,6 @@ function setMenu(open) {
   if (menuButton) menuButton.textContent = open ? '×' : '☰';
 }
 
-// MoonStone is the author's pen name.
 const portraitStyle = document.createElement('style');
 portraitStyle.textContent = `
   .photo-portrait { background: url("WhatsApp Image 2026-07-26 at 10.05.49 PM.jpeg") center 20% / cover no-repeat !important; }
@@ -30,6 +29,9 @@ portraitStyle.textContent = `
   @media (max-width: 800px) { .home-only .hero-art { transform-style: preserve-3d; transition: transform .18s ease-out; } .hero-art, .book-cover, .published-cover, .contact-card { touch-action: pan-y; } }
 `;
 document.head.appendChild(portraitStyle);
+const emailContrastStyle = document.createElement('style');
+emailContrastStyle.textContent = '.night-mode .contact-card .author-email { color: #000000 !important; }';
+document.head.appendChild(emailContrastStyle);
 document.querySelectorAll('.portrait').forEach(portrait => portrait.classList.add('photo-portrait'));
 document.querySelectorAll('a[href^="mailto:"]').forEach(link => {
   link.href = 'mailto:shravaniveldurthi778@gmail.com';
@@ -38,21 +40,16 @@ document.querySelectorAll('.contact-inner, .contact-card').forEach(section => {
   if (!section.querySelector('.author-email')) {
     const email = document.createElement('p');
     email.className = 'author-email';
+    email.style.position = 'relative';
+    email.style.zIndex = '2';
+    email.style.setProperty('color', '#000000', 'important');
+    email.style.setProperty('opacity', '1', 'important');
+    email.style.setProperty('background-color', '#ffffff', 'important');
     email.textContent = 'shravaniveldurthi778@gmail.com';
     section.appendChild(email);
   }
 });
 
-document.title = document.title.replace(/Shravani Veldurthi|Shravani/gi, 'MoonStone');
-document.querySelectorAll('.brand-name').forEach(brand => {
-  brand.innerHTML = 'MoonStone';
-});
-document.querySelectorAll('.brand-mark').forEach(mark => {
-  mark.innerHTML = 'M<span>S</span>';
-});
-document.querySelectorAll('[aria-label*="Shravani"], [aria-label*="Veldurthi"]').forEach(item => {
-  item.setAttribute('aria-label', item.getAttribute('aria-label').replace(/Shravani Veldurthi|Shravani/gi, 'MoonStone'));
-});
 document.querySelectorAll('.portrait').forEach(portrait => portrait.classList.add('photo-portrait'));
 document.querySelectorAll('a[href^="mailto:"]').forEach(link => {
   link.href = 'mailto:shravaniveldurthi778@gmail.com';
@@ -182,4 +179,31 @@ document.querySelectorAll('.hero-art, .book-cover, .published-cover, .contact-ca
   });
   card.addEventListener('pointerup', () => { card.style.transform = ''; });
   card.addEventListener('pointercancel', () => { card.style.transform = ''; });
+});
+
+// Keep the complete book titles consistent everywhere they are displayed.
+const titleReplacements = [
+  ['Love Under the Balcony Eclipse', 'Love Under The Balcony Eclipse'],
+  ['The Storm Was Never the Sea', 'The Storm Was Never In The Sea']
+];
+const titleWalker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+const titleTextNodes = [];
+while (titleWalker.nextNode()) titleTextNodes.push(titleWalker.currentNode);
+titleTextNodes.forEach(node => {
+  titleReplacements.forEach(([oldTitle, newTitle]) => {
+    node.nodeValue = node.nodeValue.replaceAll(oldTitle, newTitle);
+  });
+});
+document.querySelectorAll('[aria-label], [alt]').forEach(element => {
+  titleReplacements.forEach(([oldTitle, newTitle]) => {
+    element.setAttribute('aria-label', (element.getAttribute('aria-label') || '').replaceAll(oldTitle, newTitle));
+    element.setAttribute('alt', (element.getAttribute('alt') || '').replaceAll(oldTitle, newTitle));
+  });
+});
+document.querySelectorAll('.book-copy h2, .shelf-copy h2').forEach(heading => {
+  if (heading.textContent.includes('Love Under')) heading.textContent = 'Love Under The Balcony Eclipse';
+  if (heading.textContent.includes('Storm Was')) heading.textContent = 'The Storm Was Never In The Sea';
+});
+document.querySelectorAll('.new-book-feature h3').forEach(heading => {
+  heading.textContent = 'The Storm Was Never In The Sea';
 });
