@@ -126,3 +126,8 @@ body a,body button{cursor:pointer}
   .contact-card .author-email{max-width:100%;overflow-wrap:anywhere;text-align:center}
   .signature-quote,.journey-card{min-width:0;max-width:calc(100vw - 48px)}
 }
+
+/* Keep the browsing cursor familiar and accessible on every page. */
+body,body.home-only{cursor:auto}
+body a,body button,body.home-only a,body.home-only button{cursor:pointer}
+.star-cursor{display:none!important}
